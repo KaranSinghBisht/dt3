@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: nouchka/sqlite3
+    volumes:
+      - db_data:/data
+    networks:
+      - quiz_network
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - db_data:/app
+    ports:
+      - "9999:9999"
+    networks:
+      - quiz_network
+
+volumes:
+  db_data:
+
+networks:
+  quiz_network:
+    driver: bridge
